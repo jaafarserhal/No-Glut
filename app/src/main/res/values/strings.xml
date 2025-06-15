@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NoGlut</string>
+    <string name="steps_description_for_noglut_app">Steps Description for NoGlut app</string>
+    <string name="skip_button">Skip</string>
+    <string name="next_button">Next</string>
+    <string name="get_started_button">Get Started</string>
+    <string name="all_gluten_free">All Gluten-Free</string>
+    <string name="make_it_easy">Make it Easy</string>
+    <string name="enjoy_delicious_places">Enjoy Delicious Places</string>
+    <string name="find_the_best_restaurants">Find the best restaurants\n near you!</string>
+    <string name="find_restaurants_filtered_to_your_specifications">Find restaurants filtered to your\n specifications, Compare with Prices!</string>
+    <string name="find_useful_reviews_save_share_your_discoveries_with_others">Find useful Reviews, save and Share\n your Discoveries with others!</string>
+    <string name="welcome_header">Welcome</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
+    <string name="log_in_with_google">Log in with Google</string>
+    <string name="login_in_with_email">Login in with Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">Or</string>
+
+</resources>
