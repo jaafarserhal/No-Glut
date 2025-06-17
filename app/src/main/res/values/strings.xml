@@ -26,5 +26,9 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="back">Back</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_description">Enter the email address and we will send you a link to reset your password.</string>
+    <string name="send_reset_link">Send Reset Link</string>
 
 </resources>
