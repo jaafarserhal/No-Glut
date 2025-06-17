@@ -1,10 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.RegisterActivity">
+    android:fillViewport="true"
+    tools:context=".auth.RegisterActivity"
+    android:padding="15dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/text_view_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/cera_pro_regular"
+            android:text="@string/create_account"
+            android:textColor="@color/slat_grey"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/edittext_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_create_account">
+
+            <EditText
+                android:id="@+id/edittext_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/cera_pro_regular"
+                android:hint="@string/first_name"
+                android:inputType="textCapWords"
+                android:padding="12dp"
+                android:textColor="@color/slat_grey"
+                android:textColorHint="@color/slat_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edittext_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/cera_pro_regular"
+                android:hint="@string/last_name"
+                android:inputType="textCapWords"
+                android:padding="12dp"
+                android:textColor="@color/slat_grey"
+                android:textColorHint="@color/slat_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/edittext_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/cera_pro_regular"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="@color/slat_grey"
+                android:textColorHint="@color/slat_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edittext_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/cera_pro_regular"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="@color/slat_grey"
+                android:textColorHint="@color/slat_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edittext_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/cera_pro_regular"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="@color/slat_grey"
+                android:textColorHint="@color/slat_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_signup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/cera_pro_regular"
+            android:textColor="@color/white"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/rounded_button"
+            app:layout_constraintTop_toBottomOf="@id/edittext_container"
+            android:layout_marginTop="50dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
