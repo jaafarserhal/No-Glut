@@ -30,5 +30,9 @@
     <string name="reset_password">Reset Password</string>
     <string name="reset_password_description">Enter the email address and we will send you a link to reset your password.</string>
     <string name="send_reset_link">Send Reset Link</string>
+    <string name="back_to_log_in">Back to Log In</string>
+    <string name="link_sent">Link Sent</string>
+    <string name="sent_link_description">We have sent a password reset\nlink to your email</string>
+    <string name="check_your_email">Check your email</string>
 
 </resources>
