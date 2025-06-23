@@ -47,6 +47,13 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.viewpager2)
     implementation(libs.dotsindicator)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.logging.interceptor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
