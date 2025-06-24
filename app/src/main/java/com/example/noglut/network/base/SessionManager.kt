@@ -1,4 +1,4 @@
-package com.example.noglut.network
+package com.example.noglut.network.base
 
 import android.content.Context
 import com.example.noglut.network.user.models.LoginResponse

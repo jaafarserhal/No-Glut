@@ -77,6 +77,24 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textview_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/cera_pro_regular"
+                android:text="@string/invalid_username_or_password"
+                android:textColor="@color/red"
+                 android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:textAllCaps="true"
+                app:layout_constraintTop_toBottomOf="@id/edittext_container"
+                android:visibility="invisible"
+               />
+
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_reset_password"
@@ -91,7 +109,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edittext_container"
+                app:layout_constraintTop_toBottomOf="@id/textview_error_message"
                 tools:text="@string/forgot_password" />
 
             <androidx.appcompat.widget.AppCompatButton

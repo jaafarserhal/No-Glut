@@ -1,4 +1,4 @@
-package com.example.noglut.network.user.models
+package com.example.noglut.network.base
 
 data class ApiResponse(
     val isSuccess: Boolean,

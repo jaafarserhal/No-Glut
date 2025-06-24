@@ -8,4 +8,5 @@
     <color name="facebook_button_color">#3B5998</color>
     <color name="google_button_color">#EA4335</color>
     <color name="link_color">#1C88E5</color>
+    <color name="red">#FF0000</color>
 </resources>

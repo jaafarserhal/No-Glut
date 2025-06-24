@@ -1,4 +1,4 @@
-package com.example.noglut.network
+package com.example.noglut.network.base
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit

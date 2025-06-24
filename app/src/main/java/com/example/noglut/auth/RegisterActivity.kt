@@ -1,6 +1,7 @@
 package com.example.noglut.auth
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
@@ -9,20 +10,27 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.noglut.BaseActivity
+import com.example.noglut.MainActivity
 import com.example.noglut.R
 import com.example.noglut.databinding.ActivityRegisterBinding
+import com.example.noglut.network.base.SessionManager
+import com.example.noglut.network.user.models.LoginResponse
 import com.example.noglut.utilities.HttpStatusCode
-import com.example.noglut.viewModels.RegisterViewModel
+import com.example.noglut.viewModels.auth.AuthViewModel
+import com.google.gson.Gson
 
 
 class RegisterActivity : BaseActivity() {
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var viewModel: RegisterViewModel
+    private lateinit var viewModel: AuthViewModel
+    private lateinit var sessionManager: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sessionManager = SessionManager(this)
         enableEdgeToEdge()
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -103,7 +111,16 @@ class RegisterActivity : BaseActivity() {
             confirmPassword = confirmPassword,
             onSuccess = { response ->
                 progressDialog.dismiss()
-                Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
+                if (response.statusCode == HttpStatusCode.OK.code) {
+                    val gson = Gson()
+                    val loginResponse = gson.fromJson(gson.toJson(response.data), LoginResponse::class.java)
+                    sessionManager.saveUserSession(loginResponse)
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
+                }
             },
             onError = { errorMessage ->
                 progressDialog.dismiss()

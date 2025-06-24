@@ -1,25 +1,41 @@
 package com.example.noglut.auth
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.util.Patterns
+import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.noglut.BaseActivity
+import com.example.noglut.MainActivity
 import com.example.noglut.R
 import com.example.noglut.databinding.ActivityLoginBinding
+import com.example.noglut.network.base.SessionManager
+import com.example.noglut.network.user.models.LoginResponse
+import com.example.noglut.utilities.HttpStatusCode
+import com.example.noglut.viewModels.auth.AuthViewModel
+import com.google.gson.Gson
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var viewModel: AuthViewModel
+    private lateinit var sessionManager: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sessionManager = SessionManager(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -48,6 +64,9 @@ class LoginActivity : BaseActivity() {
             destinationActivity = RegisterActivity::class.java
         )
 
+        binding.buttonLogin.setOnClickListener {
+            makeLoginRequest()
+        }
     }
 
     // Function to set a colored text with a clickable link
@@ -71,6 +90,64 @@ class LoginActivity : BaseActivity() {
             val intent = Intent(context, destinationActivity)
             context.startActivity(intent)
         }
+    }
+
+    private fun makeLoginRequest() {
+
+        val email = binding.edittextEmail.text.toString().trim()
+        val password = binding.edittextPassword.text.toString().trim()
+
+        // Validate fields
+        when {
+
+            email.isEmpty() -> {
+                binding.edittextEmail.error = "Email is required"
+                binding.edittextEmail.requestFocus()
+                return
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.edittextEmail.error = "Invalid email format"
+                binding.edittextEmail.requestFocus()
+                return
+            }
+            password.isEmpty() -> {
+                binding.edittextPassword.error = "Password is required"
+                binding.edittextPassword.requestFocus()
+                return
+            }
+        }
+
+        // Show loader
+        val progressDialog = ProgressDialog(this).apply {
+            setMessage("Registering...")
+            setCancelable(false)
+            show()
+        }
+
+        // Make network call
+        viewModel.login(
+            email = email,
+            password = password,
+            onSuccess = { response ->
+                progressDialog.dismiss()
+                binding.textviewErrorMessage.visibility = View.INVISIBLE
+                if (response.statusCode == HttpStatusCode.OK.code) {
+                    val gson = Gson()
+                    val loginResponse = gson.fromJson(gson.toJson(response.data), LoginResponse::class.java)
+                    sessionManager.saveUserSession(loginResponse)
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                   binding.textviewErrorMessage.visibility = View.VISIBLE
+                }
+            },
+            onError = { errorMessage ->
+                progressDialog.dismiss()
+                println("Error: $errorMessage")
+                Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_LONG).show()
+            }
+        )
     }
 
 }

@@ -1,8 +1,10 @@
 package com.example.noglut.network.user
 
-import com.example.noglut.network.user.models.ApiResponse
+import com.example.noglut.network.base.ApiResponse
+import com.example.noglut.network.base.NetworkModule
+import com.example.noglut.network.user.models.LoginRequest
 import com.example.noglut.network.user.models.RegisterRequest
-import com.example.noglut.network.NetworkModule
+import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -11,12 +13,19 @@ class UserRepository {
     private val apiService = NetworkModule.apiService
 
     suspend fun registerUser(request: RegisterRequest): Result<ApiResponse> {
+        return handleNetworkCall { apiService.registerUser(request) }
+    }
+
+    suspend fun login(request: LoginRequest): Result<ApiResponse> {
+        return handleNetworkCall { apiService.login(request) }
+    }
+
+    private suspend fun handleNetworkCall(apiCall: suspend () -> Response<ApiResponse>): Result<ApiResponse> {
         return try {
-            val response = apiService.registerUser(request)
+            val response = apiCall()
             if (response.isSuccessful) {
-                response.body()?.let {
-                    Result.success(it)
-                } ?: Result.failure(Exception("Empty response body"))
+                response.body()?.let { Result.success(it) }
+                    ?: Result.failure(Exception("Empty response body"))
             } else {
                 Result.failure(Exception("HTTP ${response.code()}: ${response.message()}"))
             }
