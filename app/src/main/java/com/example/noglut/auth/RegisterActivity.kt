@@ -16,7 +16,9 @@ import com.example.noglut.databinding.ActivityRegisterBinding
 import com.example.noglut.network.base.SessionManager
 import com.example.noglut.network.user.models.LoginResponse
 import com.example.noglut.utilities.HttpStatusCode
+import com.example.noglut.utilities.loader.Loader
 import com.example.noglut.viewModels.auth.AuthViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 
@@ -96,11 +98,7 @@ class RegisterActivity : BaseActivity() {
         }
 
         // Show loader
-        val progressDialog = ProgressDialog(this).apply {
-            setMessage("Registering...")
-            setCancelable(false)
-            show()
-        }
+        Loader.showLoader(this)
 
         // Make network call
         viewModel.registerUser(
@@ -110,7 +108,7 @@ class RegisterActivity : BaseActivity() {
             password = password,
             confirmPassword = confirmPassword,
             onSuccess = { response ->
-                progressDialog.dismiss()
+               Loader.hideLoader()
                 if (response.statusCode == HttpStatusCode.OK.code) {
                     val gson = Gson()
                     val loginResponse = gson.fromJson(gson.toJson(response.data), LoginResponse::class.java)
@@ -119,13 +117,12 @@ class RegisterActivity : BaseActivity() {
                     startActivity(intent)
                     finish()
                 }else{
-                    Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, response.message!!, Snackbar.LENGTH_SHORT).show()
                 }
             },
             onError = { errorMessage ->
-                progressDialog.dismiss()
+                Loader.hideLoader()
                 println("Error: $errorMessage")
-                Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_LONG).show()
             }
         )
     }

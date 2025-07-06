@@ -35,5 +35,8 @@
     <string name="sent_link_description">We have sent a password reset\nlink to your email</string>
     <string name="check_your_email">Check your email</string>
     <string name="invalid_username_or_password">Invalid username or password</string>
+    <string name="logout_button">Logout</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
 
 </resources>

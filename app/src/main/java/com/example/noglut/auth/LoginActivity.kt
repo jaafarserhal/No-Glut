@@ -22,7 +22,9 @@ import com.example.noglut.databinding.ActivityLoginBinding
 import com.example.noglut.network.base.SessionManager
 import com.example.noglut.network.user.models.LoginResponse
 import com.example.noglut.utilities.HttpStatusCode
+import com.example.noglut.utilities.loader.Loader
 import com.example.noglut.viewModels.auth.AuthViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class LoginActivity : BaseActivity() {
@@ -51,7 +53,7 @@ class LoginActivity : BaseActivity() {
             linkResId = R.string.reset,
             greyColorResId = R.color.dark_grey,
             linkColorResId = R.color.link_color,
-            destinationActivity = ResetPasswordActivity::class.java
+            destinationActivity = SendResetPasswordCodeActivity::class.java
         )
 
         setColoredTextWithClick(
@@ -118,19 +120,16 @@ class LoginActivity : BaseActivity() {
         }
 
         // Show loader
-        val progressDialog = ProgressDialog(this).apply {
-            setMessage("Registering...")
-            setCancelable(false)
-            show()
-        }
+        Loader.showLoader(this)
+
 
         // Make network call
         viewModel.login(
             email = email,
             password = password,
             onSuccess = { response ->
-                progressDialog.dismiss()
-                binding.textviewErrorMessage.visibility = View.INVISIBLE
+                Loader.hideLoader()
+
                 if (response.statusCode == HttpStatusCode.OK.code) {
                     val gson = Gson()
                     val loginResponse = gson.fromJson(gson.toJson(response.data), LoginResponse::class.java)
@@ -139,13 +138,12 @@ class LoginActivity : BaseActivity() {
                     startActivity(intent)
                     finish()
                 }else{
-                   binding.textviewErrorMessage.visibility = View.VISIBLE
+                    Snackbar.make(binding.root, response.message!!, Snackbar.LENGTH_SHORT).show()
                 }
             },
             onError = { errorMessage ->
-                progressDialog.dismiss()
+                Loader.hideLoader()
                 println("Error: $errorMessage")
-                Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_LONG).show()
             }
         )
     }

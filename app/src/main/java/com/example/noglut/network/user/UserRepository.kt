@@ -4,6 +4,11 @@ import com.example.noglut.network.base.ApiResponse
 import com.example.noglut.network.base.NetworkModule
 import com.example.noglut.network.user.models.LoginRequest
 import com.example.noglut.network.user.models.RegisterRequest
+import com.example.noglut.network.user.models.ResetPasswordRequest
+import com.example.noglut.network.user.models.SendResetCodeRequest
+import com.example.noglut.network.user.models.VerifyResetCodeRequest
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -19,6 +24,19 @@ class UserRepository {
     suspend fun login(request: LoginRequest): Result<ApiResponse> {
         return handleNetworkCall { apiService.login(request) }
     }
+
+    suspend fun sendResetPasswordCode(request: SendResetCodeRequest): Result<ApiResponse> {
+        return handleNetworkCall { apiService.sendResetPasswordCode(request) }
+    }
+
+    suspend fun verifyResetPasswordCode(request: VerifyResetCodeRequest): Result<ApiResponse> {
+        return handleNetworkCall { apiService.verifyResetPasswordCode(request) }
+    }
+
+    suspend fun resetPassword(request: ResetPasswordRequest): Result<ApiResponse> {
+        return handleNetworkCall { apiService.resetPassword(request) }
+    }
+
 
     private suspend fun handleNetworkCall(apiCall: suspend () -> Response<ApiResponse>): Result<ApiResponse> {
         return try {
